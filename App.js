@@ -8,7 +8,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";  //
 import Splash from "./screens/Splash";
 import Onboarding from "./screens/Onboarding";
 import HomePage from "./screens/Homepage";
-import Statistic from "./screens/Statistic";
+import Statistics from "./screens/Statistics";
+import Profile from "./screens/Profile";
+import Add from "./screens/Add";
 
 const Stack = createNativeStackNavigator();                         //initialize stack
 
@@ -21,19 +23,46 @@ const Stack = createNativeStackNavigator();                         //initialize
 //const store = createStore(reducer);                                 //creating redux store
 
 export default function App() {
+
   return (
     <NavigationContainer>
       {/*<Provider store={store}>
          <View style={styles.container}>
           <Text>Open up App.js to start working on your app!</Text>
         </View> */}
-      <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#00BCD4" translucent={true} />
+      <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#0077b6" translucent={true} />
 
-      <Stack.Navigator initialRouteName="homepage" screenOptions={{ headerShown: false }}  >
-        <Stack.Screen name="splash" component={Splash}/>
+      <Stack.Navigator initialRouteName="statistics" screenOptions={{ headerShown: false }}  >
+        <Stack.Screen name="splash" component={Splash} />
         <Stack.Screen name="onboarding" component={Onboarding} />
         <Stack.Screen name="homepage" component={HomePage} />
-        <Stack.Screen name="statistic" component={Statistic} />
+        <Stack.Screen name="statistics" component={Statistics} />
+        <Stack.Screen name="profile" component={Profile} options={{
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: "#00b4d8",
+          },
+          headerShadowVisible: false, // applied here
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerTitleAlign: 'center'
+
+        }} />
+        <Stack.Screen name="add" component={Add} options={{
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: "#00b4d8",
+          },
+          headerShadowVisible: false, // applied here
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerTitleAlign: 'center'
+
+        }} />
 
       </Stack.Navigator>
       {/* </Provider> */}

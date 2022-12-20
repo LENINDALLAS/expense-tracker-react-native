@@ -128,7 +128,7 @@ function HomePage(props) {
                 </View>
 
             </View>
-            <TabNavigator  navigation={props.navigation}/>
+            <TabNavigator  navigation={props.navigation} selectedTab={1}/>
 
         </View>
     )
@@ -137,9 +137,8 @@ function HomePage(props) {
 const styles = StyleSheet.create({
     homepageContainer: {
         flex: 1,
-        backgroundColor: "#FFF",
-        alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "flex-end",
+        backgroundColor: "#00b4d8",
     },
     homepageFlex1: {
         flex: .2,

@@ -1,110 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Icon } from '@rneui/themed';
 
 function TabNavigator(props) {
 
-    const [selectedTab, setSelectedTab] = React.useState(1);
+  //  const [selectedTab, setSelectedTab] = useState(props.selectedTab);
+
+   // console.log("rendered", selectedTab)
 
     return (
         < View style={styles.container} >
 
             <View style={styles.button}>
-                <TouchableOpacity onPress={() => {props.navigation.navigate('homepage'), setSelectedTab(1)}}>
-
-                    {
-                        selectedTab === 1 ? (<Icon
-                            reverse
-                            name='home'
-                            type='octicons'
-                            color='#000'
-                            size={20}
-
-
-                        />) : (<Icon
-                            name='home'
-                            type='octicons'
-                            color='#000'
-                            size={20}
-
-
-                        />)
-                    }
+                <TouchableOpacity onPress={() => props.navigation.navigate('homepage')}>
+                    <Icon
+                        reverse={props.selectedTab === 1 ? true : false}
+                        name='home'
+                        type='octicons'
+                        color='#0077b6'
+                        size={20}
+                    />
                 </TouchableOpacity>
             </View>
             <View style={styles.button}>
-                <TouchableOpacity onPress={() => { props.navigation.navigate('statistic'), setSelectedTab(2) }}>
-
-                    {
-                        selectedTab === 2 ? (<Icon
-                            reverse
-                            name='bar-chart'
-                            type='feather'
-                            color='#000'
-                            size={20}
-
-
-                        />) : (
-                            <Icon
-
-                                name='bar-chart'
-                                type='feather'
-                                color='#000'
-                                size={20}
-
-
-                            />)
-                    }
+                <TouchableOpacity onPress={() => props.navigation.navigate('statistics')}>
+                    <Icon
+                        reverse={props.selectedTab === 2 ? true : false}
+                        name='bar-chart'
+                        type='feather'
+                        color='#0077b6'
+                        size={20}
+                    />
                 </TouchableOpacity>
             </View>
             <View style={styles.button}>
-                <TouchableOpacity onPress={() => { props.navigation.navigate('wallet'), setSelectedTab(3) }}>
-
-                    {
-                        selectedTab === 3 ? (<Icon
-                            reverse
-                            name='wallet'
-                            type='entypo'
-                            color='#000'
-                            size={20}
-
-
-                        />) : (
-                            <Icon
-
-                                name='wallet'
-                                    type='entypo'
-                                color='#000'
-                                size={20}
-
-
-                            />)
-                    }
+                <TouchableOpacity onPress={() => props.navigation.navigate('add')}>
+                    <Icon
+                        reverse={props.selectedTab === 3 ? true : false}
+                        name='plus'
+                        type='foundation'
+                        color='#0077b6'
+                        size={20}
+                    />
                 </TouchableOpacity>
             </View>
             <View style={styles.button}>
-                <TouchableOpacity onPress={() => { props.navigation.navigate('profile'), setSelectedTab(4) }}>
-
-                    {
-                        selectedTab === 4 ? (<Icon
-                            reverse
-                            name='account-circle'
-                            type='materialicons'
-                            color='#000'
-                            size={20}
-
-
-                        />) : (
-                            <Icon
-
-                                name='account-circle'
-                                type='materialicons'
-                                color='#000'
-                                size={20}
-
-
-                            />)
-                    }
+                <TouchableOpacity onPress={() => props.navigation.navigate('profile')}>
+                    <Icon
+                        reverse={props.selectedTab === 4 ? true : false}
+                        name='account-circle'
+                        type='materialicons'
+                        color='#0077b6'
+                        size={20}
+                    />
                 </TouchableOpacity>
             </View>
 
@@ -128,7 +76,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         // borderWidth: 2,
-        // borderColor: '#000',
+        // borderColor: '#0077b6',
         // height: 30,
     }
 })
