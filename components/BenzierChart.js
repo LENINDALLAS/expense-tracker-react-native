@@ -1,37 +1,95 @@
-import { View, Text, StyleSheet } from "react-native"
-import React, { useEffect, useState } from "react"
+import { View, Text, StyleSheet, Dimensions } from "react-native";
+import React, { useEffect, useState } from "react";
 import { LineChart } from "react-native-chart-kit";
-import { Dimensions } from "react-native";
+import { getAccount } from "../utils/helperFunctions";
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function BenzierChart(props) {
 
-    const [dates, setDates] = useState([])
+    const dataStructure = [
+        // {
+        //     type: "expense",
+        //     date: new Date(new Date().setDate(1)),
+        //     amount: 222
+        // },
+        // {
+        //     type: "expense",
+        //     date: new Date(new Date().setDate(5)),
+        //     amount: 500
+        // },
+        // {
+        //     type: "expense",
+        //     date: new Date(new Date().setDate(13)),
+        //     amount: 250
+        // },
+        // {
+        //     type: "expense",
+        //     date: new Date(new Date().setDate(19)),
+        //     amount: 10
+        // }
+    ];
+
+    const [dates, setDates] = useState([1])
+    const [expense, setExpense] = useState([0])
+
+    const calculateExpense = async () => {
+        const expense = [];
+        const account = await getAccount();
+        const expenseHash = {};
+        if (account) {
+            const parsedAccount = JSON.parse(account);
+            parsedAccount.forEach((expense) => {
+                if (expense.type === "expense" &&
+                    new Date(expense.date).getMonth() === new Date().getMonth() &&
+                    new Date(expense.date).getYear() === new Date().getYear()) {
+                    const date = new Date(expense.date).getDate();
+
+                    if (expenseHash[date]) {
+                        expenseHash[date] = expenseHash[date] + Number(expense.amount);
+                    } else {
+                        expenseHash[date] = Number(expense.amount)
+                    }
+                }
+            })
+        }
+        for (let i = 1; i <= Number(new Date().getDate()); i++) {
+            if (expenseHash[i]) {
+                expense.push(expenseHash[i]);
+            } else {
+                expense.push(0);
+            }
+        }
+        setExpense(expense);
+    }
+
+    useEffect(() => {
+        try {
+            // AsyncStorage.setItem("account", JSON.stringify(dataStructure));
+            calculateExpense();
+        } catch (error) {
+            console.error(error)
+        }
+    }, [])
+
 
     useEffect(() => {
         const date = new Date().getDate();
         const tempDates = [];
         for (let i = 1; i <= Number(date); i++) {
-            tempDates.push(i.toString());
+            tempDates.push(i);
         }
         setDates(tempDates);
     }, []);
 
     return (
         <View>
-            <Text>December - Summary</Text>
+            <Text>{new Date().toLocaleString('default', { month: 'long' }).toString().split(" ")[1]} Expense - Summary</Text>
             <LineChart
                 data={{
                     labels: [...dates],
                     datasets: [
                         {
-                            data: [
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100
-                            ]
+                            data: [...expense]
                         }
                     ]
                 }}

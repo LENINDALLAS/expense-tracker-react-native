@@ -3,6 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";              //3rd party for navigation
 import { createNativeStackNavigator } from "@react-navigation/native-stack";  //setting up the navigation stack
+import store from './redux/store.js';
+import { Provider } from 'react-redux';
 // import { createStore, combineReducers } from "redux";                         // redux for state management   
 // import { Provider } from "react-redux";                                        //importing reducer 
 import Splash from "./screens/Splash";
@@ -11,28 +13,20 @@ import HomePage from "./screens/Homepage";
 import Statistics from "./screens/Statistics";
 import Profile from "./screens/Profile";
 import Add from "./screens/Add";
+import Test from "./screens/Test";
 
 const Stack = createNativeStackNavigator();                         //initialize stack
-
-
-// const reducer = combineReducers({
-//   // signin: signinReducer,                                            //adding the reducers
-//   // story: storyReducer,
-// });
-
-//const store = createStore(reducer);                                 //creating redux store
 
 export default function App() {
 
   return (
     <NavigationContainer>
-      {/*<Provider store={store}>
-         <View style={styles.container}>
-          <Text>Open up App.js to start working on your app!</Text>
-        </View> */}
+      <Provider store={store}>
+        
       <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#0077b6" translucent={true} />
 
       <Stack.Navigator initialRouteName="statistics" screenOptions={{ headerShown: false }}  >
+        <Stack.Screen name="test" component={Test} />
         <Stack.Screen name="splash" component={Splash} />
         <Stack.Screen name="onboarding" component={Onboarding} />
         <Stack.Screen name="homepage" component={HomePage} />
@@ -65,7 +59,7 @@ export default function App() {
         }} />
 
       </Stack.Navigator>
-      {/* </Provider> */}
+      </Provider>
     </NavigationContainer>
   );
 }
