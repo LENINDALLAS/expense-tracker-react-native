@@ -1,5 +1,5 @@
-import { ADD_CREDIT_OR_DEBIT } from "../constants";
+import { addTransaction } from "../slice/addSlice"
 
-export const addCreditOrDebit = (data) => async(dispatch) => {
-    dispatch({ type: ADD_CREDIT_OR_DEBIT, payload: data });
+export const addCreditOrDebit = (data) => async (dispatch) => {
+    dispatch(addTransaction({ ...data }));
 }

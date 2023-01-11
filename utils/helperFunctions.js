@@ -3,7 +3,7 @@ import { SUCCESS, FAILED } from "../constants";
 
 export const getAccount = async () => {
     const account = await AsyncStorage.getItem("account");
-    return account;
+    return JSON.parse(account);
 }
 
 export const setAccount = async (data) => {

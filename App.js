@@ -20,47 +20,49 @@ const Stack = createNativeStackNavigator();                         //initialize
 export default function App() {
 
   return (
-    <NavigationContainer>
-      <Provider store={store}>
-        
-      <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#0077b6" translucent={true} />
+    <Provider store={store}>
 
-      <Stack.Navigator initialRouteName="statistics" screenOptions={{ headerShown: false }}  >
-        <Stack.Screen name="test" component={Test} />
-        <Stack.Screen name="splash" component={Splash} />
-        <Stack.Screen name="onboarding" component={Onboarding} />
-        <Stack.Screen name="homepage" component={HomePage} />
-        <Stack.Screen name="statistics" component={Statistics} />
-        <Stack.Screen name="profile" component={Profile} options={{
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: "#00b4d8",
-          },
-          headerShadowVisible: false, // applied here
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerTitleAlign: 'center'
+      <NavigationContainer>
 
-        }} />
-        <Stack.Screen name="add" component={Add} options={{
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: "#00b4d8",
-          },
-          headerShadowVisible: false, // applied here
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerTitleAlign: 'center'
+        <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#0077b6" translucent={true} />
 
-        }} />
+        <Stack.Navigator initialRouteName="statistics" screenOptions={{ headerShown: false }}  >
+          <Stack.Screen name="test" component={Test} />
+          <Stack.Screen name="splash" component={Splash} />
+          <Stack.Screen name="onboarding" component={Onboarding} />
+          <Stack.Screen name="homepage" component={HomePage} />
+          <Stack.Screen name="statistics" component={Statistics} />
+          <Stack.Screen name="profile" component={Profile} options={{
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: "#00b4d8",
+            },
+            headerShadowVisible: false, // applied here
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerTitleAlign: 'center'
 
-      </Stack.Navigator>
-      </Provider>
-    </NavigationContainer>
+          }} />
+          <Stack.Screen name="add" component={Add} options={{
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: "#00b4d8",
+            },
+            headerShadowVisible: false, // applied here
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerTitleAlign: 'center'
+
+          }} />
+
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+
   );
 }
 

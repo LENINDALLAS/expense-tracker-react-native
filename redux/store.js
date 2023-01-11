@@ -1,16 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { createStore, combineReducers } from 'redux';
-import { addReducer } from "./reducer/addReducer";
+import transactionReducer  from "./slice/addSlice";
 
 const initialState = {
     
 };
 
 const reducer = combineReducers({
-    add: addReducer
+    transaction: transactionReducer
 });
 
 const store = configureStore({
     reducer,
     preloadedState: initialState
-})
+});
+
+export default store;
