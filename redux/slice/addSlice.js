@@ -1,21 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { ADD_TRANSACTION } from "../constants";
-import { addTransactionReducer } from "../reducer/addReducer";
-import { getAccount } from "../../utils/helperFunctions";
+import { addTransactionReducer, loadStoredDataReducer } from "../reducer/addReducer";
 
-const account = (async() =>await getAccount())();
-
-console.log(getAccount())
 const slice = createSlice({
     name: ADD_TRANSACTION,
     initialState: {
-        account
+        account: []
     },
     reducers: {
-        addTransaction: addTransactionReducer
+        addTransaction: addTransactionReducer, 
+        loadStoredData: loadStoredDataReducer
     }
 });
 
 export default slice.reducer;
 
-export const { addTransaction } = slice.actions;
+export const { addTransaction, loadStoredData } = slice.actions;

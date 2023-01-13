@@ -2,43 +2,23 @@ import { View, Text, StyleSheet, Dimensions } from "react-native";
 import React, { useEffect, useState } from "react";
 import { LineChart } from "react-native-chart-kit";
 import { getAccount } from "../utils/helperFunctions";
+import { useDispatch, useSelector } from 'react-redux';
+import { loadAsyncStorageData } from "../redux/actions/addAction";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function BenzierChart(props) {
 
-    const dataStructure = [
-        // {
-        //     type: "expense",
-        //     date: new Date(new Date().setDate(1)),
-        //     amount: 222
-        // },
-        // {
-        //     type: "expense",
-        //     date: new Date(new Date().setDate(5)),
-        //     amount: 500
-        // },
-        // {
-        //     type: "expense",
-        //     date: new Date(new Date().setDate(13)),
-        //     amount: 250
-        // },
-        // {
-        //     type: "expense",
-        //     date: new Date(new Date().setDate(19)),
-        //     amount: 10
-        // }
-    ];
+    const dispatch = useDispatch();
+    const { account } = useSelector(reducer => reducer.transaction);
 
     const [dates, setDates] = useState([1])
     const [expense, setExpense] = useState([0])
 
-    const calculateExpense = async () => {
+    const loadTransaction = (transactionData) => {
         const expense = [];
-        const account = await getAccount();
         const expenseHash = {};
-        if (account) {
-            const parsedAccount = JSON.parse(account);
-            parsedAccount.forEach((expense) => {
+        if (transactionData.length > 0) {
+            transactionData.forEach((expense) => {
                 if (expense.type === "expense" &&
                     new Date(expense.date).getMonth() === new Date().getMonth() &&
                     new Date(expense.date).getYear() === new Date().getYear()) {
@@ -62,6 +42,11 @@ export default function BenzierChart(props) {
         setExpense(expense);
     }
 
+    const calculateExpense = async () => {
+        const account = await getAccount();
+        dispatch(loadAsyncStorageData(account));
+    }
+
     useEffect(() => {
         try {
             // AsyncStorage.setItem("account", JSON.stringify(dataStructure));
@@ -80,6 +65,10 @@ export default function BenzierChart(props) {
         }
         setDates(tempDates);
     }, []);
+
+    useEffect(() => {
+        loadTransaction(account);
+    }, [account]);
 
     return (
         <View>

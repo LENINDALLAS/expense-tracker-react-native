@@ -5,7 +5,7 @@ import TabNavigator from "../screens/TabNavigator";
 import React, { useState } from 'react';
 import { SUCCESS } from '../constants';
 import { addCreditOrDebit } from "../redux/actions/addAction";
-
+import { setAccount } from "../utils/helperFunctions";
 
 function Add(props) {
     const [amount, setAmount] = useState(null);
@@ -15,20 +15,20 @@ function Add(props) {
 
     const addAmount = async () => {
         try {
-            if(!amount || amount <=0 ) return;
+            if (!amount || amount <= 0) return;
             const calculatedAmount = {
                 type: amountType ? "expense" : "income",
                 date: `${new Date(new Date())}`,
                 amount
             };
             dispatch(addCreditOrDebit(calculatedAmount));
-           // const setResult = await setAccount(calculatedAmount);
-            // if (setResult === SUCCESS) {
-            //     setAmount(0);
-            //     props.navigation.navigate("statistics");
-            // } else {
-            //     console.log("ERROR: amount not tracked, please try again");
-            // }
+            const setResult = await setAccount(calculatedAmount);
+            if (setResult === SUCCESS) {
+                setAmount(0);
+                props.navigation.navigate("statistics");
+            } else {
+                console.log("ERROR: amount not tracked, please try again");
+            }
         } catch (error) {
             console.log("Add:addAmount:ERROR", { error });
         }
