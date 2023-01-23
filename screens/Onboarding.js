@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native'
+import { View, StyleSheet, Image, TouchableOpacity, Text, TextInput } from 'react-native'
 
 function Onboarding(props) {
     return (
@@ -10,6 +10,15 @@ function Onboarding(props) {
                     uri: 'https://cdn.dribbble.com/users/2004171/screenshots/5646149/dribbble_canvas__calculator_.gif',
                 }} />
             {/* </View> */}
+
+            <TextInput style={styles.onboardingHomepageButton} placeholder="Enter Name" value={0} keyboardType="text" onChangeText={() => console.log("name")} />
+            <TextInput style={styles.onboardingHomepageButton} placeholder="Enter Email" value={0} keyboardType="text" onChangeText={() => console.log("name")} />
+            <TextInput style={styles.onboardingHomepageButton} placeholder="Enter phone" value={0} keyboardType="text" onChangeText={() => console.log("name")} />
+            <TouchableOpacity onPress={() => console.log("profile image")} style={styles.onboardingHomepageButton} >
+                <Text style={styles.onboardingButtonText} >
+                    Upload Profile Picture
+                </Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={() => props.navigation.navigate("homepage")} style={styles.onboardingHomepageButton} >
                 <Text style={styles.onboardingButtonText} >
                     Get Started
