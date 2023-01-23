@@ -10,15 +10,20 @@ function Onboarding(props) {
                     uri: 'https://cdn.dribbble.com/users/2004171/screenshots/5646149/dribbble_canvas__calculator_.gif',
                 }} />
             {/* </View> */}
-
-            <TextInput style={styles.onboardingHomepageButton} placeholder="Enter Name" value={0} keyboardType="text" onChangeText={() => console.log("name")} />
-            <TextInput style={styles.onboardingHomepageButton} placeholder="Enter Email" value={0} keyboardType="text" onChangeText={() => console.log("name")} />
-            <TextInput style={styles.onboardingHomepageButton} placeholder="Enter phone" value={0} keyboardType="text" onChangeText={() => console.log("name")} />
-            <TouchableOpacity onPress={() => console.log("profile image")} style={styles.onboardingHomepageButton} >
-                <Text style={styles.onboardingButtonText} >
-                    Upload Profile Picture
+            <View style={styles.onboardingFormContainer} >
+                <Image style={styles.onboardingAvatar}
+                    resizeMode="center"
+                    source={{
+                        uri: 'https://cdn.dribbble.com/users/2004171/screenshots/5646149/dribbble_canvas__calculator_.gif',
+                    }} />
+                <TextInput style={styles.onboardingForm} placeholder="Enter Name" value={0} keyboardType="text" onChangeText={() => console.log("name")} />
+                <TextInput style={styles.onboardingForm} placeholder="Enter Email" value={0} keyboardType="text" onChangeText={() => console.log("name")} />
+                <TextInput style={styles.onboardingForm} placeholder="Enter phone" value={0} keyboardType="text" onChangeText={() => console.log("name")} />
+                <Text style={styles.onboardingForm} >
+                    Select Profile Picture
                 </Text>
-            </TouchableOpacity>
+            </View>
+
             <TouchableOpacity onPress={() => props.navigation.navigate("homepage")} style={styles.onboardingHomepageButton} >
                 <Text style={styles.onboardingButtonText} >
                     Get Started
@@ -47,6 +52,44 @@ const styles = StyleSheet.create({
         // top: "14.16 %",
         // bottom: "34.28 %",
         // opacity: "0.6"
+    },
+    onboardingFormContainer: {
+        position: "absolute",
+        zIndex: 2,
+        flex: 1,
+        borderRadius: 20,
+        backgroundColor: 'rgba(0,0,0,0.2)',
+        top: "10%",
+        width: "80%",
+        left: "11%",
+        paddingRight: "2%",
+        paddingLeft: "2%",
+        paddingTop: "4%",
+        paddingBottom: "4%",
+        alignItems: "center",
+        justifyContent: "center",
+        border: "1px solid black",
+    },
+    onboardingAvatar: {
+        zIndex: 2,
+        width: 100,
+        height: 100,
+        border: "5px solid black",
+        borderRadius: "50%",
+        margin: "5%",
+        backgroundColor: 'rgba(47, 194, 86,1)'
+    },
+    onboardingForm: {
+        textAlign: "center",
+        color: "black",
+        paddingVertical: 10,
+        border: "2px solid black",
+        borderRadius: "5px",
+        margin: 5,
+        width: "90%",
+        left: "5%",
+        backgroundColor: 'rgba(47, 194, 86,1)'        // justifyContent: "center",
+        // alignItems: "center",
     },
     onboardingHomepageButton: {
         position: "absolute",
