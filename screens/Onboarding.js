@@ -1,6 +1,20 @@
-import { View, StyleSheet, Image, TouchableOpacity, Text, TextInput } from 'react-native'
+import { View, StyleSheet, Image, TouchableOpacity, Text, TextInput } from 'react-native';
+import { uploadPicture } from "../utils/cloudinaryUploadHelper";
+import DocumentPicker from "react-native-document-picker"
 
 function Onboarding(props) {
+    const pickImage = async() => {
+        // uploadPicture()
+        console.log('====================================');
+        console.log("pickImage");
+        console.log('====================================');
+        try {
+            const response = await DocumentPicker.pickSingle();
+            setFileResponse(response);
+        } catch (err) {
+            console.warn(err);
+        }
+    }
     return (
         <View style={styles.onboardingLogoContainer}>
             {/* <View style={styles.onboardingLogoContainer}> */}
@@ -19,9 +33,11 @@ function Onboarding(props) {
                 <TextInput style={styles.onboardingForm} placeholder="Enter Name" value={0} keyboardType="text" onChangeText={() => console.log("name")} />
                 <TextInput style={styles.onboardingForm} placeholder="Enter Email" value={0} keyboardType="text" onChangeText={() => console.log("name")} />
                 <TextInput style={styles.onboardingForm} placeholder="Enter phone" value={0} keyboardType="text" onChangeText={() => console.log("name")} />
-                <Text style={styles.onboardingForm} >
+                <TouchableOpacity onPress={() => pickImage()}>
+                <Text style={styles.onboardingForm} onClick={() => pickImage()}>
                     Select Profile Picture
                 </Text>
+                </TouchableOpacity>
             </View>
 
             <TouchableOpacity onPress={() => props.navigation.navigate("homepage")} style={styles.onboardingHomepageButton} >
@@ -75,7 +91,7 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         border: "5px solid black",
-        borderRadius: "50%",
+        // borderRadius: "50%",
         margin: "5%",
         backgroundColor: 'rgba(47, 194, 86,1)'
     },
@@ -84,7 +100,7 @@ const styles = StyleSheet.create({
         color: "black",
         paddingVertical: 10,
         border: "2px solid black",
-        borderRadius: "5px",
+        // borderRadius: "5px",
         margin: 5,
         width: "90%",
         left: "5%",
