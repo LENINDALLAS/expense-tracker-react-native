@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { SUCCESS, FAILED } from "../constants";
+import { SUCCESS, FAILED } from "../../constants";
 
 export const getAccount = async () => {
     const account = await AsyncStorage.getItem("account");

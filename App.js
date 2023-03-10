@@ -3,17 +3,17 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";              //3rd party for navigation
 import { createNativeStackNavigator } from "@react-navigation/native-stack";  //setting up the navigation stack
-import store from './redux/store.js';
+import store from './src/redux/store.js';
 import { Provider } from 'react-redux';
 // import { createStore, combineReducers } from "redux";                         // redux for state management   
 // import { Provider } from "react-redux";                                        //importing reducer 
-import Splash from "./screens/Splash";
-import Onboarding from "./screens/Onboarding";
-import HomePage from "./screens/Homepage";
-import Statistics from "./screens/Statistics";
-import Profile from "./screens/Profile";
-import Add from "./screens/Add";
-import Test from "./screens/Test";
+import Splash from "./src/screens/Splash";
+import Onboarding from "./src/screens/Onboarding";
+import HomePage from "./src/screens/Homepage";
+import Statistics from "./src/screens/Statistics";
+import Profile from "./src/screens/Profile";
+import Add from "./src/screens/Add";
+import Test from "./src/screens/Test";
 
 const Stack = createNativeStackNavigator();                         //initialize stack
 

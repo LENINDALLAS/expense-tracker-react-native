@@ -3,7 +3,7 @@ import { Icon } from '@rneui/themed';
 import { useDispatch, useSelector } from 'react-redux';
 import TabNavigator from "../screens/TabNavigator";
 import React, { useState } from 'react';
-import { SUCCESS } from '../constants';
+import { SUCCESS } from '../../constants';
 import { addCreditOrDebit } from "../redux/actions/addAction";
 import { setAccount } from "../utils/helperFunctions";
 
