@@ -17,3 +17,14 @@ export const setAccount = async (data) => {
         return FAILED;
     }
 }
+
+export const setProfile = async(data) => {
+    try {
+      const profile =  JSON.parse(await AsyncStorage.getItem("profile"));
+      await AsyncStorage.setItem("profile", JSON.stringify({...profile, ...data}));
+      return SUCCESS;
+    } catch (error) {
+        console.log("helperFuncations:AsyncStorage-setProfile: ERROR", { error });
+        return FAILED;
+    }
+}

@@ -1,12 +1,14 @@
 import { View, StyleSheet, Image, TouchableOpacity, Text, TextInput } from 'react-native';
-import React, {useState} from 'react';
-import { uploadPicture } from "../utils/cloudinaryUploadHelper";
+import React, {useEffect, useState} from 'react';
 import * as DocumentPicker from 'expo-document-picker';
+import { setProfile } from '../utils/helperFunctions';
+import { uploadPicture } from "../utils/cloudinaryUploadHelper";
 
 function Onboarding(props) {
    const [name, setName] = useState('');
    const [email, setEmail] = useState('');
    const [phone, setPhone] = useState('');
+    const [profilePic, setProfilePic] = useState('');
 
     const pickImage = async() => {
         // uploadPicture()
@@ -18,7 +20,9 @@ function Onboarding(props) {
             console.log('====================================');
             console.log("response", response);
             console.log('====================================');
-            setFileResponse(response);
+            const avatar = await uploadPicture(response.uri);
+            await setProfile({ profilePic: avatar });
+            setProfilePic(avatar);
         } catch (err) {
             console.warn(err);
         }
@@ -36,7 +40,7 @@ function Onboarding(props) {
                 <Image style={styles.onboardingAvatar}
                     resizeMode="center"
                     source={{
-                        uri: 'https://cdn.dribbble.com/users/2004171/screenshots/5646149/dribbble_canvas__calculator_.gif',
+                        uri: profilePic ? profilePic : 'https://cdn.dribbble.com/users/2004171/screenshots/5646149/dribbble_canvas__calculator_.gif',
                     }} />
                 <TextInput style={styles.onboardingForm} placeholder="Enter Name" value={name} keyboardType="text" onChangeText={setName} />
                 <TextInput style={styles.onboardingForm} placeholder="Enter Email" value={email} keyboardType="text" onChangeText={setEmail} />
