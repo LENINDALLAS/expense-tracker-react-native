@@ -1,15 +1,23 @@
 import { View, StyleSheet, Image, TouchableOpacity, Text, TextInput } from 'react-native';
+import React, {useState} from 'react';
 import { uploadPicture } from "../utils/cloudinaryUploadHelper";
-import DocumentPicker from "react-native-document-picker"
+import * as DocumentPicker from 'expo-document-picker';
 
 function Onboarding(props) {
+   const [name, setName] = useState('');
+   const [email, setEmail] = useState('');
+   const [phone, setPhone] = useState('');
+
     const pickImage = async() => {
         // uploadPicture()
         console.log('====================================');
         console.log("pickImage");
         console.log('====================================');
         try {
-            const response = await DocumentPicker.pickSingle();
+            const response = await DocumentPicker.getDocumentAsync();
+            console.log('====================================');
+            console.log("response", response);
+            console.log('====================================');
             setFileResponse(response);
         } catch (err) {
             console.warn(err);
@@ -30,9 +38,9 @@ function Onboarding(props) {
                     source={{
                         uri: 'https://cdn.dribbble.com/users/2004171/screenshots/5646149/dribbble_canvas__calculator_.gif',
                     }} />
-                <TextInput style={styles.onboardingForm} placeholder="Enter Name" value={0} keyboardType="text" onChangeText={() => console.log("name")} />
-                <TextInput style={styles.onboardingForm} placeholder="Enter Email" value={0} keyboardType="text" onChangeText={() => console.log("name")} />
-                <TextInput style={styles.onboardingForm} placeholder="Enter phone" value={0} keyboardType="text" onChangeText={() => console.log("name")} />
+                <TextInput style={styles.onboardingForm} placeholder="Enter Name" value={name} keyboardType="text" onChangeText={setName} />
+                <TextInput style={styles.onboardingForm} placeholder="Enter Email" value={email} keyboardType="text" onChangeText={setEmail} />
+                <TextInput style={styles.onboardingForm} placeholder="Enter phone no" value={phone} keyboardType="text" onChangeText={setPhone} />
                 <TouchableOpacity onPress={() => pickImage()}>
                 <Text style={styles.onboardingForm} onClick={() => pickImage()}>
                     Select Profile Picture
