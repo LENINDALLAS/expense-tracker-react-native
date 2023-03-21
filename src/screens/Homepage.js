@@ -1,14 +1,50 @@
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Icon } from '@rneui/themed';
+import { useEffect, useState } from 'react';
 import TabNavigator from "../screens/TabNavigator";
+import { getProfile, getAccount } from "../utils/helperFunctions";
 
 function HomePage(props) {
+
+    const [profile, setProfile] = useState({});
+    const [total, setTotal] = useState(0);
+    const [expenseTotal, setExpenseTotal] = useState(0);
+    const [incomeTotal, setIncomeTotal] = useState(0);
+
+    useEffect(() => {
+        const getData = async () => {
+            const userInfo = await getProfile();
+            const account = await getAccount();
+            if (!account) return;
+            let calculatedTotal = 0;
+            let expenseTotal = 0;
+            let incomeTotal = 0;
+
+            for (let trans of account) {
+                if (trans.type === 'expense') {
+                    calculatedTotal = calculatedTotal - Number(trans.amount);
+                    expenseTotal += Number(trans.amount);
+                }
+                else {
+                    calculatedTotal = calculatedTotal + Number(trans.amount);
+                    incomeTotal += Number(trans.amount);
+                }
+            }
+            if (userInfo) setProfile(userInfo);
+            setTotal(calculatedTotal);
+            setExpenseTotal(expenseTotal);
+            setIncomeTotal(incomeTotal);
+        }
+
+        getData();
+    }, []);
+
     return (
         <View style={styles.homepageContainer} >
             <View style={styles.homepageFlex1} >
                 <View style={styles.homepageFlex1_child1}>
                     <Text>Good Morning</Text>
-                    <Text>Lenin Dallas</Text>
+                    <Text>{profile && profile.name}</Text>
                 </View>
                 <View style={styles.homepageFlex1_child2}>
                     <Icon
@@ -25,16 +61,16 @@ function HomePage(props) {
             <View style={styles.homepageFlex2} >
                 <View style={styles.homepageFlex2_top}>
                     <Text>Total balance</Text>
-                    <Text>$2222222222222222222222222222</Text>
+                    <Text>{total}</Text>
                 </View>
                 <View style={styles.homepageFlex2_bottom}>
                     <View style={styles.homepageFlex2_left}>
                         <Text>Income</Text>
-                        <Text>$54321</Text>
+                        <Text>{incomeTotal}</Text>
                     </View>
                     <View style={styles.homepageFlex2_right}>
                         <Text>Expenses</Text>
-                        <Text>$12345</Text>
+                        <Text>{expenseTotal}</Text>
                     </View>
                 </View>
 
@@ -128,7 +164,7 @@ function HomePage(props) {
                 </View>
 
             </View>
-            <TabNavigator  navigation={props.navigation} selectedTab={1}/>
+            <TabNavigator navigation={props.navigation} selectedTab={1} />
 
         </View>
     )

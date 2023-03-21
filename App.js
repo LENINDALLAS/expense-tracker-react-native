@@ -13,7 +13,7 @@ import HomePage from "./src/screens/Homepage";
 import Statistics from "./src/screens/Statistics";
 import Profile from "./src/screens/Profile";
 import Add from "./src/screens/Add";
-import Test from "./src/screens/Test";
+// import Test from "./src/screens/Test";
 
 const Stack = createNativeStackNavigator();                         //initialize stack
 
@@ -26,8 +26,8 @@ export default function App() {
 
         <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#0077b6" translucent={true} />
 
-        <Stack.Navigator initialRouteName="onboarding" screenOptions={{ headerShown: false }}  >
-          <Stack.Screen name="test" component={Test} />
+        <Stack.Navigator initialRouteName="homepage" screenOptions={{ headerShown: false }}  >
+          {/* <Stack.Screen name="test" component={Test} /> */}
           <Stack.Screen name="splash" component={Splash} />
           <Stack.Screen name="onboarding" component={Onboarding} />
           <Stack.Screen name="homepage" component={HomePage} />

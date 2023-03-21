@@ -18,6 +18,11 @@ export const setAccount = async (data) => {
     }
 }
 
+export const getProfile = async () => {
+    const profile = await AsyncStorage.getItem("profile");
+    return JSON.parse(profile);
+}
+
 export const setProfile = async(data) => {
     try {
       const profile =  JSON.parse(await AsyncStorage.getItem("profile"));

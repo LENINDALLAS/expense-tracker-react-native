@@ -1,19 +1,32 @@
 import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import { Icon } from '@rneui/themed';
+import { useEffect, useState } from 'react';
 import TabNavigator from "../screens/TabNavigator";
+import { getProfile } from "../utils/helperFunctions";
 
 function Profile(props) {
+
+    const [profile, setProfile] = useState({});
+
+    useEffect(() => {
+        const getUserProfile = async () => {
+            const userInfo = await getProfile();
+            if (userInfo) setProfile(userInfo);
+        }
+        getUserProfile();
+    }, []);
+
     return (
         <View style={styles.profileContainer}>
             <View style={styles.profile_top}>
                     <Image style={styles.profile_top_picture}
                         resizeMode="cover"
                         source={{
-                            uri: 'https://cdn.dribbble.com/users/2004171/screenshots/5646149/dribbble_canvas__calculator_.gif',
+                            uri: profile.profilePic ? profile.profilePic : 'https://cdn.dribbble.com/users/2004171/screenshots/5646149/dribbble_canvas__calculator_.gif',
                         }} />
                 <View style={styles.profile_top_headings} >
-                    <Text >Lenin dallas L</Text>
-                    <Text >lenindallas.l@gmail.com</Text>
+                    <Text >{profile && profile.name}</Text>
+                    <Text >{profile && profile.email}</Text>
                 </View>
             </View>
             <View style={styles.profile_middle} >

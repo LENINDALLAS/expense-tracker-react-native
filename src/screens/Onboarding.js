@@ -1,25 +1,19 @@
 import { View, StyleSheet, Image, TouchableOpacity, Text, TextInput } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import * as DocumentPicker from 'expo-document-picker';
 import { setProfile } from '../utils/helperFunctions';
 import { uploadPicture } from "../utils/cloudinaryUploadHelper";
 
 function Onboarding(props) {
-   const [name, setName] = useState('');
-   const [email, setEmail] = useState('');
-   const [phone, setPhone] = useState('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
     const [profilePic, setProfilePic] = useState('');
 
-    const pickImage = async() => {
+    const pickImage = async () => {
         // uploadPicture()
-        console.log('====================================');
-        console.log("pickImage");
-        console.log('====================================');
         try {
             const response = await DocumentPicker.getDocumentAsync();
-            console.log('====================================');
-            console.log("response", response);
-            console.log('====================================');
             const avatar = await uploadPicture(response.uri);
             await setProfile({ profilePic: avatar });
             setProfilePic(avatar);
@@ -27,6 +21,12 @@ function Onboarding(props) {
             console.warn(err);
         }
     }
+
+    const handleSubmit = async () => {
+        await setProfile({ name, email, phone });
+        props.navigation.navigate("homepage");
+    }
+    
     return (
         <View style={styles.onboardingLogoContainer}>
             {/* <View style={styles.onboardingLogoContainer}> */}
@@ -46,13 +46,13 @@ function Onboarding(props) {
                 <TextInput style={styles.onboardingForm} placeholder="Enter Email" value={email} keyboardType="text" onChangeText={setEmail} />
                 <TextInput style={styles.onboardingForm} placeholder="Enter phone no" value={phone} keyboardType="text" onChangeText={setPhone} />
                 <TouchableOpacity onPress={() => pickImage()}>
-                <Text style={styles.onboardingForm} onClick={() => pickImage()}>
-                    Select Profile Picture
-                </Text>
+                    <Text style={styles.onboardingForm} onClick={() => pickImage()}>
+                        Select Profile Picture
+                    </Text>
                 </TouchableOpacity>
             </View>
 
-            <TouchableOpacity onPress={() => props.navigation.navigate("homepage")} style={styles.onboardingHomepageButton} >
+            <TouchableOpacity onPress={() => handleSubmit()} style={styles.onboardingHomepageButton} >
                 <Text style={styles.onboardingButtonText} >
                     Get Started
                 </Text>
