@@ -9,6 +9,7 @@ import { setAccount } from "../utils/helperFunctions";
 
 function Add(props) {
     const [amount, setAmount] = useState(null);
+    const [note, setNote] = useState("");
     const [amountType, setAmountType] = useState(true);
 
     const dispatch = useDispatch();
@@ -19,7 +20,8 @@ function Add(props) {
             const calculatedAmount = {
                 type: amountType ? "expense" : "income",
                 date: `${new Date(new Date())}`,
-                amount
+                amount, 
+                reason: note
             };
             dispatch(addCreditOrDebit(calculatedAmount));
             const setResult = await setAccount(calculatedAmount);
@@ -47,6 +49,9 @@ function Add(props) {
                         Income
                     </Text>
                 </TouchableOpacity>
+            </View>
+            <View style={styles.AddContainerFlex2} >
+                <TextInput style={styles.AddContainerInput} placeholder="Enter Note" value={note} keyboardType="default" onChangeText={setNote}  />
             </View>
             <View style={styles.AddContainerFlex2} >
                 <TextInput style={styles.AddContainerInput} placeholder="Enter Amount" value={amount} keyboardType="numeric" onChangeText={setAmount} onSubmitEditing={() => addAmount()} />

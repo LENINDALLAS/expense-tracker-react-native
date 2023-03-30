@@ -2,24 +2,35 @@ import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Icon } from '@rneui/themed';
 import { useEffect, useState } from 'react';
 import TabNavigator from "../screens/TabNavigator";
-import { getProfile, getAccount } from "../utils/helperFunctions";
+import { getProfile, getAccount, setAccount } from "../utils/helperFunctions";
+import Transaction from "../components/Transaction";
+import { getDayWise, showDate } from "../utils/helperFunctions";
+// import { addTrans } from "../utils/seed";
 
 function HomePage(props) {
-
+    const [greeting, setGreeting] = useState("Good Morning");
     const [profile, setProfile] = useState({});
     const [total, setTotal] = useState(0);
     const [expenseTotal, setExpenseTotal] = useState(0);
     const [incomeTotal, setIncomeTotal] = useState(0);
+    const [account, setAccount] = useState([]);
 
     useEffect(() => {
         const getData = async () => {
+            // addTrans()
+            showDate(new Date());
+
             const userInfo = await getProfile();
             const account = await getAccount();
+            const greet = getDayWise(new Date().getHours());
+           
             if (!account) return;
             let calculatedTotal = 0;
             let expenseTotal = 0;
             let incomeTotal = 0;
-
+console.log('====================================');
+            console.log("account", account);
+console.log('====================================');
             for (let trans of account) {
                 if (trans.type === 'expense') {
                     calculatedTotal = calculatedTotal - Number(trans.amount);
@@ -34,6 +45,8 @@ function HomePage(props) {
             setTotal(calculatedTotal);
             setExpenseTotal(expenseTotal);
             setIncomeTotal(incomeTotal);
+            setAccount(account);
+            setGreeting(greet);
         }
 
         getData();
@@ -43,7 +56,7 @@ function HomePage(props) {
         <View style={styles.homepageContainer} >
             <View style={styles.homepageFlex1} >
                 <View style={styles.homepageFlex1_child1}>
-                    <Text>Good Morning</Text>
+                    <Text>{greeting}</Text>
                     <Text>{profile && profile.name}</Text>
                 </View>
                 <View style={styles.homepageFlex1_child2}>
@@ -75,94 +88,13 @@ function HomePage(props) {
                 </View>
 
             </View>
+
             <View style={styles.homepageFlex3} >
                 <View style={styles.homepageFlex3_heading}>
                     <Text>Transaction History</Text>
                     <Text>see all</Text>
                 </View>
-                <View style={styles.homepageFlex3_list}>
-                    <View style={styles.homepageFlex3_list_item} >
-                        <Icon
-                            reverse
-                            name='bell'
-                            type='fontisto'
-                            color='#57A39D'
-                            size={15}
-                        />
-                        <View style={styles.homepageFlex3_list_item_child} >
-                            <Text>Upwork</Text>
-                            <Text>Today</Text>
-                        </View>
-                        <Text >
-                            + $ 850.00
-                        </Text>
-                    </View>
-                    <View style={styles.homepageFlex3_list_item} >
-                        <Icon
-                            reverse
-                            name='bell'
-                            type='fontisto'
-                            color='#57A39D'
-                            size={15}
-                        />
-                        <View style={styles.homepageFlex3_list_item_child} >
-                            <Text>Upwork</Text>
-                            <Text>Today</Text>
-                        </View>
-                        <Text >
-                            + $ 850.00
-                        </Text>
-                    </View>
-                    <View style={styles.homepageFlex3_list_item} >
-                        <Icon
-                            reverse
-                            name='bell'
-                            type='fontisto'
-                            color='#57A39D'
-                            size={15}
-                        />
-                        <View style={styles.homepageFlex3_list_item_child} >
-                            <Text>Upwork</Text>
-                            <Text>Today</Text>
-                        </View>
-                        <Text >
-                            + $ 850.00
-                        </Text>
-                    </View>
-                    <View style={styles.homepageFlex3_list_item} >
-                        <Icon
-                            reverse
-                            name='bell'
-                            type='fontisto'
-                            color='#57A39D'
-                            size={15}
-                        />
-                        <View style={styles.homepageFlex3_list_item_child} >
-                            <Text>Upwork</Text>
-                            <Text>Today</Text>
-                        </View>
-                        <Text >
-                            + $ 850.00
-                        </Text>
-                    </View>
-                    <View style={styles.homepageFlex3_list_item} >
-                        <Icon
-                            reverse
-                            name='bell'
-                            type='fontisto'
-                            color='#57A39D'
-                            size={15}
-                        />
-                        <View style={styles.homepageFlex3_list_item_child} >
-                            <Text>Upwork</Text>
-                            <Text>Today</Text>
-                        </View>
-                        <Text >
-                            + $ 850.00
-                        </Text>
-                    </View>
-                </View>
-
+                {account && account.length > 0 &&  <Transaction data={account} />}
             </View>
             <TabNavigator navigation={props.navigation} selectedTab={1} />
 
