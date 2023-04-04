@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { ADD_TRANSACTION } from "../constants";
-import { addTransactionReducer, loadStoredDataReducer } from "../reducer/addReducer";
+import { addTransactionReducer, loadStoredDataReducer, expenseDataReducer, incomeDataReducer } from "../reducer/addReducer";
 
 const slice = createSlice({
     name: ADD_TRANSACTION,
@@ -8,11 +8,13 @@ const slice = createSlice({
         account: []
     },
     reducers: {
-        addTransaction: addTransactionReducer, 
-        loadStoredData: loadStoredDataReducer
+        addTransaction: addTransactionReducer,
+        loadStoredData: loadStoredDataReducer,
+        expenseData: expenseDataReducer,
+        incomeData: incomeDataReducer
     }
 });
 
 export default slice.reducer;
 
-export const { addTransaction, loadStoredData } = slice.actions;
+export const { addTransaction, loadStoredData, expenseData, incomeData } = slice.actions;

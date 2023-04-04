@@ -26,7 +26,6 @@ function Profile(props) {
                         }} />
                 <View style={styles.profile_top_headings} >
                     <Text >{profile && profile.name}</Text>
-                    <Text >{profile && profile.email}</Text>
                 </View>
             </View>
             <View style={styles.profile_middle} >
@@ -39,20 +38,7 @@ function Profile(props) {
                         size={15}
                     />
                     <Text style={styles.profile_middle_section_text}>
-                        Profile Info
-                    </Text>
-                </View>
-                {/* --------   below are extra remove */}
-                <View style={styles.profile_middle_section} >
-                    <Icon
-                        reverse
-                        name='bell'
-                        type='fontisto'
-                        color='#57A39D'
-                        size={15}
-                    />
-                    <Text style={styles.profile_middle_section_text}>
-                        Profile Info
+                        {profile && profile.email}
                     </Text>
                 </View>
                 <View style={styles.profile_middle_section} >
@@ -64,31 +50,7 @@ function Profile(props) {
                         size={15}
                     />
                     <Text style={styles.profile_middle_section_text}>
-                        Profile Info
-                    </Text>
-                </View>
-                <View style={styles.profile_middle_section} >
-                    <Icon
-                        reverse
-                        name='bell'
-                        type='fontisto'
-                        color='#57A39D'
-                        size={15}
-                    />
-                    <Text style={styles.profile_middle_section_text}>
-                        Profile Info
-                    </Text>
-                </View>
-                <View style={styles.profile_middle_section} >
-                    <Icon
-                        reverse
-                        name='bell'
-                        type='fontisto'
-                        color='#57A39D'
-                        size={15}
-                    />
-                    <Text style={styles.profile_middle_section_text}>
-                        Profile Info
+                        {profile && profile.phone}
                     </Text>
                 </View>
             </View>

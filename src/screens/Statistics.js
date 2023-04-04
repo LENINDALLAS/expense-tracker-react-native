@@ -2,101 +2,32 @@ import { View, TouchableOpacity, Text, StyleSheet, StatusBar, ScrollView } from 
 import { Icon } from '@rneui/themed';
 import TabNavigator from "./TabNavigator";
 import BenzierChart from "../components/BenzierChart";
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import Transaction from "../components/Transaction";
 
 function Statistics(props) {
+    const { expenseData, incomeData } = useSelector(reducer => reducer.transaction);
+
+    const [expenseEnabled, setExpenseEnabled] = useState(true);
+
     return (
         <View style={styles.statisticContainer}>
             <View style={styles.statisticFlex1} >
-                <BenzierChart />
+                <BenzierChart expense={expenseEnabled}/>
             </View>
             <View style={styles.statisticFlex2} >
-                <View style={styles.statisticFlex2_heading}>
-                    <Text>Top Spending</Text>
-                </View>
-                <ScrollView >
-                    <View style={styles.statisticFlex2_list}>
-                        <View style={styles.statisticFlex2_list_item} >
-                            <Icon
-                                reverse
-                                name='bell'
-                                type='fontisto'
-                                color='#57A39D'
-                                size={15}
-                            />
-                            <View style={styles.statisticFlex2_list_item_child} >
-                                <Text>Upwork</Text>
-                                <Text>Today</Text>
-                            </View>
-                            <Text style={styles.statisticFlex2_list_item_child2} >
-                                + $ 850.00
-                            </Text>
-                        </View>
-                        <View style={styles.statisticFlex2_list_item} >
-                            <Icon
-                                reverse
-                                name='bell'
-                                type='fontisto'
-                                color='#57A39D'
-                                size={15}
-                            />
-                            <View style={styles.statisticFlex2_list_item_child} >
-                                <Text>Upwork</Text>
-                                <Text>Today</Text>
-                            </View>
-                            <Text style={styles.statisticFlex2_list_item_child2} >
-                                + $ 850.00
-                            </Text>
-                        </View>
-                        <View style={styles.statisticFlex2_list_item} >
-                            <Icon
-                                reverse
-                                name='bell'
-                                type='fontisto'
-                                color='#57A39D'
-                                size={15}
-                            />
-                            <View style={styles.statisticFlex2_list_item_child} >
-                                <Text>Upwork</Text>
-                                <Text>Today</Text>
-                            </View>
-                            <Text style={styles.statisticFlex2_list_item_child2} >
-                                + $ 850.00
-                            </Text>
-                        </View>
-                        <View style={styles.statisticFlex2_list_item} >
-                            <Icon
-                                reverse
-                                name='bell'
-                                type='fontisto'
-                                color='#57A39D'
-                                size={15}
-                            />
-                            <View style={styles.statisticFlex2_list_item_child} >
-                                <Text>Upwork</Text>
-                                <Text>Today</Text>
-                            </View>
-                            <Text style={styles.statisticFlex2_list_item_child2} >
-                                + $ 850.00
-                            </Text>
-                        </View>
-                        <View style={styles.statisticFlex2_list_item} >
-                            <Icon
-                                reverse
-                                name='bell'
-                                type='fontisto'
-                                color='#57A39D'
-                                size={15}
-                            />
-                            <View style={styles.statisticFlex2_list_item_child} >
-                                <Text>Upwork</Text>
-                                <Text>Today</Text>
-                            </View>
-                            <Text style={styles.statisticFlex2_list_item_child2}>
-                                + $ 850.00
-                            </Text>
-                        </View>
-                    </View>
-                </ScrollView>
+                <TouchableOpacity onPress={() => setExpenseEnabled(true)} style={{ ...styles.statisticFlex2_heading, backgroundColor: expenseEnabled ? "#0077b6" : "#00b4d8" }}>
+                    <Text style={styles.statisticFlex2_heading_text} >Spending</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setExpenseEnabled(false)} style={{ ...styles.statisticFlex2_heading, backgroundColor: !expenseEnabled ? "#0077b6" : "#00b4d8" }}>
+                    <Text style={styles.statisticFlex2_heading_text}>Incomes</Text>
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.statisticFlex3}>
+                {expenseEnabled && expenseData && expenseData.length > 0 && <Transaction data={expenseData} />}
+                {!expenseEnabled && incomeData && incomeData.length > 0 && <Transaction data={incomeData} />}
             </View>
 
             <TabNavigator navigation={props.navigation} selectedTab={2} />
@@ -114,18 +45,22 @@ const styles = StyleSheet.create({
         // justifyContent: "center"
     },
     statisticFlex1: {
-        flex: .4,
-        position: "relative"
+        flex: .48,
+        position: "relative",
+        // paddingTop: 5,
     },
     statisticFlex2: {
-        flex: .6,
+        flex: .05,
         position: "relative",
-        // paddingTop: 10,
-        // flexDirection: "row",
-        // justifyContent: "space-between",
+        // paddingTop: 5,
+        flexDirection: "row",
+        justifyContent: "space-around",
         // top: "8%",
         width: "100%",
-        padding: 8
+        // padding: 8,
+        borderWidth: 3,
+        // border: "5px solid black",
+        borderRadius: 5
     },
     statisticFlex2_heading: {
         alignItems: "center",
@@ -133,23 +68,37 @@ const styles = StyleSheet.create({
         // padding: 15,
         // top: 20,
         // left: 10,
-        fontSize: 40
+        fontSize: 40,
+        width: "50%",
     },
-    statisticFlex2_list: {
+    statisticFlex2_heading_text: {
+        fontWeight: "bold",
+        fontSize: 16,
+    },
+    statisticFlex3: {
+        flex: .5,
+        position: "relative",
+        paddingTop: 20,
+        flexDirection: "row",
+        justifyContent: "space-around",
+        // top: "8%",
+        width: "100%",
+    },
+    statisticFlex3_list: {
         flex: 1,
         padding: 7,
     },
-    statisticFlex2_list_item: {
+    statisticFlex3_list_item: {
         flex: 1,
         flexDirection: "row",
         paddingTop: 5,
         paddingBottom: 5
     },
-    statisticFlex2_list_item_child: {
+    statisticFlex3_list_item_child: {
         flex: 1,
         justifyContent: "center"
     },
-    statisticFlex2_list_item_child2: {
+    statisticFlex3_list_item_child2: {
         paddingTop: 15,
     }
 

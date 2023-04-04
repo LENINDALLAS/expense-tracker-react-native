@@ -26,7 +26,7 @@ export default function App() {
 
         <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#0077b6" translucent={true} />
 
-        <Stack.Navigator initialRouteName="homepage" screenOptions={{ headerShown: false }}  >
+        <Stack.Navigator initialRouteName="statistics" screenOptions={{ headerShown: false }}  >
           {/* <Stack.Screen name="test" component={Test} /> */}
           <Stack.Screen name="splash" component={Splash} />
           <Stack.Screen name="onboarding" component={Onboarding} />
