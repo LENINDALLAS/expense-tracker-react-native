@@ -3,7 +3,7 @@ import { createStore, combineReducers } from 'redux';
 import transactionReducer  from "./slice/addSlice";
 
 const initialState = {
-    
+    // transaction: []
 };
 
 const reducer = combineReducers({

@@ -9,7 +9,7 @@ export const getAccount = async () => {
 export const setAccount = async (data) => {
     try {
         const account = JSON.parse(await AsyncStorage.getItem("account"));
-        // console.log("setAccount", account);
+        // console.log("setAccount", {account, data});
         await AsyncStorage.setItem("account", JSON.stringify([data, ...account]));
         return SUCCESS;
     } catch (error) {

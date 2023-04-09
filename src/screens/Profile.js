@@ -25,7 +25,7 @@ function Profile(props) {
                             uri: profile.profilePic ? profile.profilePic : 'https://cdn.dribbble.com/users/2004171/screenshots/5646149/dribbble_canvas__calculator_.gif',
                         }} />
                 <View style={styles.profile_top_headings} >
-                    <Text >{profile && profile.name}</Text>
+                    <Text style={styles.profile_text} >{profile && profile.name}</Text>
                 </View>
             </View>
             <View style={styles.profile_middle} >
@@ -54,6 +54,8 @@ function Profile(props) {
                     </Text>
                 </View>
             </View>
+            <View style={styles.profile_bottom}>
+            </View>
             <TabNavigator navigation={props.navigation} selectedTab={4} />
         </View>
     )
@@ -80,16 +82,23 @@ const styles = StyleSheet.create({
         padding: 10
     },
     profile_middle: {
-        flex: .6,
+        flex: .2
     },
     profile_middle_section: {
         flex: 1,
         flexDirection: "row",
-        justifyContent: "flex-start",
-        alignItems: "center",
+        // justifyContent: "flex-start",
+        // alignItems: "center",
     },
     profile_middle_section_text: {
+        fontWeight: "bold",
         padding: 10
+    },
+    profile_bottom: {
+        flex: .4
+    },
+    profile_text: {
+        fontWeight: "bold"
     }
 })
 

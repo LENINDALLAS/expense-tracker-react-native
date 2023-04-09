@@ -16,6 +16,7 @@ export default function BenzierChart(props) {
     const [income, setIncome] = useState([0])
 
     const loadTransaction = (transactionData) => {
+        if(!transactionData) return;
         const expense = [];
         const income = [];
         const expenseData = [];
@@ -25,7 +26,7 @@ export default function BenzierChart(props) {
 
         if (transactionData.length > 0) {
             transactionData.forEach((trans) => {
-                if (trans.type === "expense" &&
+                if (trans && trans.type === "expense" &&
                     new Date(trans.date).getMonth() === new Date().getMonth() &&
                     new Date(trans.date).getYear() === new Date().getYear()) {
                     expenseData.push(trans);
@@ -36,7 +37,7 @@ export default function BenzierChart(props) {
                     } else {
                         expenseHash[date] = Number(trans.amount)
                     }
-                } else if (trans.type === "income" &&
+                } else if (trans && trans.type === "income" &&
                     new Date(trans.date).getMonth() === new Date().getMonth() &&
                     new Date(trans.date).getYear() === new Date().getYear()) {
                     incomeData.push(trans);
@@ -47,7 +48,7 @@ export default function BenzierChart(props) {
                     } else {
                         incomeHash[date] = Number(trans.amount)
                     }
-                    }
+                }
             })
         }
         for (let i = 1; i <= Number(new Date().getDate()); i++) {
@@ -72,7 +73,7 @@ export default function BenzierChart(props) {
 
     const calculateExpense = async () => {
         const account = await getAccount();
-        dispatch(loadAsyncStorageData(account));
+        if (account) dispatch(loadAsyncStorageData(account));
     }
 
     useEffect(() => {
@@ -95,81 +96,81 @@ export default function BenzierChart(props) {
     }, []);
 
     useEffect(() => {
-        loadTransaction(account);
+            loadTransaction(account);
     }, [account]);
 
     return (
         <View>
-            <Text style={styles.benzierChart_title} >{`${props.expense ? "Expense" : "Income" } - Summary ${new Date().toLocaleString('default', { month: 'long' }).toString()}`}</Text>
+            <Text style={styles.benzierChart_title} >{`${props.expense ? "Expense" : "Income"} - Summary ${new Date().toLocaleString('default', { month: 'long' }).toString()}`}</Text>
             {props && props.expense &&
-            <LineChart
-                data={{
-                    labels: [...dates],
-                    datasets: [
-                        {
-                            data: [...expense]
+                <LineChart
+                    data={{
+                        labels: [...dates],
+                        datasets: [
+                            {
+                                data: [...expense]
+                            }
+                        ]
+                    }}
+                    width={Dimensions.get("window").width} // from react-native
+                    height={220}
+                    yAxisLabel="RS"
+                    yAxisSuffix=""
+                    yAxisInterval={1} // optional, defaults to 1
+                    chartConfig={{
+                        backgroundColor: "#e26a00",
+                        backgroundGradientFrom: "#fb8c00",
+                        backgroundGradientTo: "#ffa726",
+                        decimalPlaces: 2, // optional, defaults to 2dp
+                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                        style: {
+                            borderRadius: 16
+                        },
+                        propsForDots: {
+                            r: "6",
+                            strokeWidth: "2",
+                            stroke: "#ffa726"
                         }
-                    ]
-                }}
-                width={Dimensions.get("window").width} // from react-native
-                height={220}
-                yAxisLabel="RS"
-                yAxisSuffix=""
-                yAxisInterval={1} // optional, defaults to 1
-                chartConfig={{
-                    backgroundColor: "#e26a00",
-                    backgroundGradientFrom: "#fb8c00",
-                    backgroundGradientTo: "#ffa726",
-                    decimalPlaces: 2, // optional, defaults to 2dp
-                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                    style: {
-                        borderRadius: 16
-                    },
-                    propsForDots: {
-                        r: "6",
-                        strokeWidth: "2",
-                        stroke: "#ffa726"
-                    }
-                }}
-                bezier
-                style={styles.benzierChart}
-            />
+                    }}
+                    bezier
+                    style={styles.benzierChart}
+                />
             }
-            { props && !props.expense &&
-            <LineChart
-                data={{
-                    labels: [...dates],
-                    datasets: [
-                        {
-                            data: [...income]
+            {props && !props.expense &&
+                <LineChart
+                    data={{
+                        labels: [...dates],
+                        datasets: [
+                            {
+                                data: [...income]
+                            }
+                        ]
+                    }}
+                    width={Dimensions.get("window").width} // from react-native
+                    height={220}
+                    yAxisLabel="RS"
+                    yAxisSuffix=""
+                    yAxisInterval={1} // optional, defaults to 1
+                    chartConfig={{
+                        backgroundColor: "#e26a00",
+                        backgroundGradientFrom: "#fb8c00",
+                        backgroundGradientTo: "#ffa726",
+                        decimalPlaces: 2, // optional, defaults to 2dp
+                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                        style: {
+                            borderRadius: 16
+                        },
+                        propsForDots: {
+                            r: "6",
+                            strokeWidth: "2",
+                            stroke: "#ffa726"
                         }
-                    ]
-                }}
-                width={Dimensions.get("window").width} // from react-native
-                height={220}
-                yAxisLabel="RS"
-                yAxisSuffix=""
-                yAxisInterval={1} // optional, defaults to 1
-                chartConfig={{
-                    backgroundColor: "#e26a00",
-                    backgroundGradientFrom: "#fb8c00",
-                    backgroundGradientTo: "#ffa726",
-                    decimalPlaces: 2, // optional, defaults to 2dp
-                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                    style: {
-                        borderRadius: 16
-                    },
-                    propsForDots: {
-                        r: "6",
-                        strokeWidth: "2",
-                        stroke: "#ffa726"
-                    }
-                }}
-                bezier
-                style={styles.benzierChart}
-            /> }
+                    }}
+                    bezier
+                    style={styles.benzierChart}
+                />}
         </View>
     )
 };
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
     benzierChart: {
         marginVertical: 8,
         borderRadius: 16
-    }, 
+    },
     benzierChart_title: {
         paddingTop: 10,
         paddingLeft: 10,

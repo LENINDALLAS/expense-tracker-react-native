@@ -23,25 +23,25 @@ function HomePage(props) {
             const userInfo = await getProfile();
             const account = await getAccount();
             const greet = getDayWise(new Date().getHours());
-           
+            console.log("acc", account.length);
+            if (userInfo) setProfile(userInfo);
             if (!account) return;
             let calculatedTotal = 0;
             let expenseTotal = 0;
             let incomeTotal = 0;
-console.log('====================================');
-            console.log("account", account);
-console.log('====================================');
+
             for (let trans of account) {
-                if (trans.type === 'expense') {
-                    calculatedTotal = calculatedTotal - Number(trans.amount);
-                    expenseTotal += Number(trans.amount);
-                }
-                else {
-                    calculatedTotal = calculatedTotal + Number(trans.amount);
-                    incomeTotal += Number(trans.amount);
-                }
+                if(trans) {
+                    if (trans.type === 'expense') {
+                        calculatedTotal = calculatedTotal - Number(trans.amount);
+                        expenseTotal += Number(trans.amount);
+                    }
+                    else {
+                        calculatedTotal = calculatedTotal + Number(trans.amount);
+                        incomeTotal += Number(trans.amount);
+                    }
+                }  
             }
-            if (userInfo) setProfile(userInfo);
             setTotal(calculatedTotal);
             setExpenseTotal(expenseTotal);
             setIncomeTotal(incomeTotal);
