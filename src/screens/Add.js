@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     AddContainerFlex2: {
-        flex: .8,
+        flex: .4,
         justifyContent: "center",
         margin: 5,
 

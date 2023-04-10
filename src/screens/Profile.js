@@ -32,8 +32,8 @@ function Profile(props) {
                 <View style={styles.profile_middle_section} >
                     <Icon
                         reverse
-                        name='bell'
-                        type='fontisto'
+                        name='account-box'
+                        type='materialicons'
                         color='#57A39D'
                         size={15}
                     />
@@ -44,8 +44,8 @@ function Profile(props) {
                 <View style={styles.profile_middle_section} >
                     <Icon
                         reverse
-                        name='bell'
-                        type='fontisto'
+                        name='local-phone'
+                        type='materialicons'
                         color='#57A39D'
                         size={15}
                     />

@@ -1,11 +1,14 @@
 import { View, StyleSheet, Image, TouchableOpacity, Text, TextInput, Dimensions } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
+import { useSelector } from 'react-redux';
 import { setProfile } from '../utils/helperFunctions';
 import { uploadPicture } from "../utils/cloudinaryUploadHelper";
 
 function Onboarding(props) {
+
+    const { account } = useSelector(reducer => reducer.transaction);
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
@@ -26,8 +29,8 @@ function Onboarding(props) {
                 aspect: [4, 3],
                 quality: 1,
                 base64: true
-            }); 
-            if(!result || !result.assets || !result.assets[0].base64) {
+            });
+            if (!result || !result.assets || !result.assets[0].base64) {
                 alert("Unable to select image, please try again.");
                 return
             }
@@ -41,7 +44,19 @@ function Onboarding(props) {
     }
 
     const handleSubmit = async () => {
-        await setProfile({ name, email, phone });
+        if (!account) {
+            if(!name) {
+                alert("Name field cannot be empty.");
+                return;
+            } else if(!email) {
+                alert("Email field cannot be empty.");
+                return;
+            } else if (!phone) {
+                alert("Phone field cannot be empty.");
+                return;
+            }
+            await setProfile({ name, email, phone });
+        }
         props.navigation.navigate("homepage");
     }
 
@@ -54,7 +69,7 @@ function Onboarding(props) {
                     uri: 'https://cdn.dribbble.com/users/2004171/screenshots/5646149/dribbble_canvas__calculator_.gif',
                 }} />
             {/* </View> */}
-            <View style={styles.onboardingFormContainer} >
+            {!account && <View style={styles.onboardingFormContainer} >
                 <View style={styles.onboardingAvatarContainer} >
                     <Image style={styles.onboardingAvatar}
                         resizeMode="center"
@@ -71,7 +86,7 @@ function Onboarding(props) {
                     </Text>
                 </TouchableOpacity>
             </View>
-
+            }
             <TouchableOpacity onPress={() => handleSubmit()} style={styles.onboardingHomepageButton} >
                 <Text style={styles.onboardingButtonText} >
                     Get Started

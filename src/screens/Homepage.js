@@ -23,7 +23,7 @@ function HomePage(props) {
             const userInfo = await getProfile();
             const account = await getAccount();
             const greet = getDayWise(new Date().getHours());
-            console.log("acc", account.length);
+            // console.log("acc", account.length);
             if (userInfo) setProfile(userInfo);
             if (!account) return;
             let calculatedTotal = 0;
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly"
     },
     homepageFlex3: {
-        flex: 1,
+        flex: .5,
         borderColor: '#FF3D00',
         borderWidth: 5,
         width: "100%",
